@@ -7,18 +7,18 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ProgressBar;
 
 import com.omaroid.udacity.movies.R;
-import com.omaroid.udacity.movies.adapter.MovieAdapter;
+import com.omaroid.udacity.movies.adapter.MoviesAdapter;
 import com.omaroid.udacity.movies.model.Movie;
 import com.omaroid.udacity.movies.presenter.main.MainActivityContract;
 import com.omaroid.udacity.movies.presenter.main.MainActivityPresenter;
@@ -26,18 +26,22 @@ import com.omaroid.udacity.movies.ui.detail.DetailActivity;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.omaroid.udacity.movies.utils.Constants.MOVIE_OBJECT;
 import static com.omaroid.udacity.movies.utils.Constants.POPULARITY_SORT;
 import static com.omaroid.udacity.movies.utils.Constants.VOTE_AVERAGE_SORT;
 
-public class MainActivityFragment extends Fragment implements MainActivityContract.View, AdapterView.OnItemClickListener {
+public class MainActivityFragment extends Fragment implements MainActivityContract.View {
 
     private MainActivityContract.Presenter presenter;
-    private ProgressBar mProgressBar;
-    private GridView mGridView;
-    private MovieAdapter movieAdapter;
+    private MoviesAdapter movieAdapter;
     private ArrayList<Movie> movies;
-
+    @BindView(R.id.rvMovies)
+    RecyclerView rvMovie;
+    @BindView(R.id.progressBar)
+    ProgressBar mProgressBar;
 
     public MainActivityFragment() {
     }
@@ -54,10 +58,12 @@ public class MainActivityFragment extends Fragment implements MainActivityContra
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        mGridView = view.findViewById(R.id.gridView);
-        mGridView.setOnItemClickListener(this);
-        mProgressBar = view.findViewById(R.id.progressBar);
-        movieAdapter = new MovieAdapter(getContext());
+
+        ButterKnife.bind(this, view);
+        rvMovie.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        rvMovie.setHasFixedSize(true);
+        movieAdapter = new MoviesAdapter(presenter, movies);
+
         if (null == savedInstanceState) {
             movies = new ArrayList<>();
             presenter.getMoviesList(POPULARITY_SORT, movieAdapter);
@@ -65,7 +71,7 @@ public class MainActivityFragment extends Fragment implements MainActivityContra
             ArrayList<Movie> tempMoviesList = savedInstanceState.getParcelableArrayList("moviesList");
             movieAdapter.setMoviesList(tempMoviesList);
         }
-        mGridView.setAdapter(movieAdapter);
+        rvMovie.setAdapter(movieAdapter);
         return view;
     }
 
@@ -106,6 +112,7 @@ public class MainActivityFragment extends Fragment implements MainActivityContra
     }
 
     private void getMovies(String sort) {
+        movieAdapter.setMoviesList(null);
         presenter.getMoviesList(sort, movieAdapter);
     }
 
@@ -127,18 +134,20 @@ public class MainActivityFragment extends Fragment implements MainActivityContra
             mProgressBar.setVisibility(View.VISIBLE);
         } else {
             mProgressBar.setVisibility(View.INVISIBLE);
-
         }
     }
 
     @Override
-    public void setMovies(MovieAdapter movieAdapter) {
-        mGridView.setAdapter(movieAdapter);
+    public void setMovies(MoviesAdapter movieAdapter) {
+        rvMovie.setAdapter(movieAdapter);
     }
 
     @Override
-    public void switchToItemDetailActivity() {
+    public void switchToItemDetailActivity(Movie movie) {
         Intent detailViewIntent = new Intent(getActivity(), DetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(MOVIE_OBJECT, movie);
+        detailViewIntent.putExtras(bundle);
         startActivity(detailViewIntent);
     }
 
@@ -147,12 +156,4 @@ public class MainActivityFragment extends Fragment implements MainActivityContra
         presenter.detachView();
         super.onDestroy();
     }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Intent detailViewIntent = new Intent(getActivity(), DetailActivity.class);
-        detailViewIntent.putExtra(MOVIE_OBJECT, movieAdapter.getItem(i));
-        startActivity(detailViewIntent);
-    }
-
 }

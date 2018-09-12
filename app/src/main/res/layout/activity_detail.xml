@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/rvBackground"
     tools:context=".ui.detail.DetailActivity">
 
     <include layout="@layout/toolbar" />
 
     <include
-        android:id="@+id/content_main_fragment"
+        android:id="@+id/content_detail_fragment"
         layout="@layout/fragment_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
