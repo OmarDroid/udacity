@@ -7,9 +7,8 @@
     <string name="not_available">Movies are not available now, Please check again later.</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="action_settings">Settings</string>
-    <string name="movie_title">Title: </string>
-    <string name="vote_average">Vote average: </string>
-    <string name="release_date">Realease Date: </string>
-    <string name="overview">Overview: </string>
-    <string name="poster_size">w342</string>
+    <string name="movie_title">Title:</string>
+    <string name="vote_average">Vote average:</string>
+    <string name="release_date">Realease Date:</string>
+    <string name="overview">Overview:</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.omaroid.udacity.movies.presenter.main;
 
-import com.omaroid.udacity.movies.adapter.MovieAdapter;
+import com.omaroid.udacity.movies.adapter.MoviesAdapter;
+import com.omaroid.udacity.movies.model.Movie;
 import com.omaroid.udacity.movies.utils.BaseView;
 
 public interface MainActivityContract {
@@ -11,15 +12,15 @@ public interface MainActivityContract {
 
         void showProgressIndicator(boolean show);
 
-        void setMovies(MovieAdapter movieAdapter);
+        void setMovies(MoviesAdapter movieAdapter);
 
-        void switchToItemDetailActivity();
+        void switchToItemDetailActivity(Movie movie);
     }
 
     interface Presenter {
-        void getMoviesList(String order, MovieAdapter movieAdapter);
+        void getMoviesList(String order, MoviesAdapter movieAdapter);
 
-        void onItemClicked();
+        void onItemClicked(Movie movie);
 
         void attachView(View view);
 
