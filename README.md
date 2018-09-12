@@ -8,4 +8,8 @@ Add it in gradle.properties
 API_KEY = ""
 ```
 
-### For now I'm just using [Picasso](https://github.com/square/picasso) an image downloading and caching library
+### For now I'm using :
+
+[Picasso](https://github.com/square/picasso) an image downloading and caching library
+[Butterknife](http://jakewharton.github.io/butterknife/) for view binding
+[Retrofit](https://square.github.io/retrofit) HTTP client for Android
