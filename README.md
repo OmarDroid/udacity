@@ -11,5 +11,7 @@ API_KEY = ""
 ### Dependencies used :
 
 [Picasso](https://github.com/square/picasso) an image downloading and caching library
+
 [Butterknife](http://jakewharton.github.io/butterknife/) for view binding
+
 [Retrofit](https://square.github.io/retrofit) HTTP client for Android
