@@ -8,7 +8,7 @@ Add it in gradle.properties
 API_KEY = ""
 ```
 
-### For now I'm using :
+### Dependencies used :
 
 [Picasso](https://github.com/square/picasso) an image downloading and caching library
 [Butterknife](http://jakewharton.github.io/butterknife/) for view binding
