@@ -8,7 +8,7 @@ Add it in gradle.properties
 API_KEY = ""
 ```
 
-### Dependencies used :
+## Dependencies used :
 
 [Picasso](https://github.com/square/picasso) an image downloading and caching library
 
