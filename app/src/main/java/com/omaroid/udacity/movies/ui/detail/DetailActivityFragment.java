@@ -59,7 +59,7 @@ public class DetailActivityFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (null != getArguments())
-            movie = null;
+            movie = getArguments().getParcelable(MOVIE_OBJECT);
 
     }
 
